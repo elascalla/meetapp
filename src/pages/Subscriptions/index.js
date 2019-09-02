@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar } from 'react-native';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,7 +10,11 @@ import { Background, MeetupCard, Empty } from '~/components';
 
 import { Container, SubscriptionsList, Loading } from './styles';
 
+import { cancelSubscriptionRequest } from '~/store/modules/meetup/actions';
+
 function Subscriptions({ isFocused }) {
+  const dispatch = useDispatch();
+
   const [subscriptions, setSubscriptions] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -56,7 +61,7 @@ function Subscriptions({ isFocused }) {
   }
 
   async function handleCancelSubscription(subscriptionId) {
-    await api.delete(`subscriptions/${subscriptionId}`);
+    dispatch(cancelSubscriptionRequest(subscriptionId));
 
     setSubscriptions(
       subscriptions.filter(subscription => subscription.id !== subscriptionId)

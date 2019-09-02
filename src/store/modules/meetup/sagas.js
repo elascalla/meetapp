@@ -28,7 +28,7 @@ export function* cancelSubscription({ payload }) {
   const { id, data } = payload;
 
   try {
-    yield call(api.put, `meetups/${id}`, data);
+    yield call(api.delete, `subscriptions/${id}`, data);
 
     Alert.alert(
       'Inscrição cancelada',
