@@ -104,7 +104,7 @@ export default function Meetups() {
         <MeetupsList
           data={meetups}
           keyExtractor={item => String(item.id)}
-          onEndReached={() => loadPage()}
+          onEndReached={this.loadPage}
           onEndReachedThreshold={0.1}
           onRefresh={refreshList}
           refreshing={refreshing}
