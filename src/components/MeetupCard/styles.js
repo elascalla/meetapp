@@ -1,52 +1,56 @@
 import styled from 'styled-components/native';
+
 import Button from '~/components/Button';
+import LazyImage from '~/components/LazyImage';
 
 export const Container = styled.View`
   background: #fff;
   border-radius: 4px;
-  margin: 0 15px 15px;
-  height: 360px;
-  opacity: ${props => (props.past ? 0.7 : 1)};
+  overflow: hidden;
+  margin-bottom: 20px;
 `;
 
-export const Image = styled.Image.attrs({
-  borderTopLeftRadius: 4,
-  borderTopRightRadius: 4,
-})`
+export const Banner = styled(LazyImage)`
   height: 150px;
-  width: 100%;
-  margin-bottom: 15px;
+  width: auto;
 `;
 
 export const Content = styled.View`
-  flex: 1;
-  height: 200px;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
-export const Title = styled.Text.attrs({
-  numberOfLines: 1,
-})`
-  font-size: 20px;
-  color: #333;
+export const Title = styled.Text`
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  color: #333;
 `;
 
-export const Info = styled.View`
+export const Info = styled.View``;
+
+export const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 8px;
+  margin-top: 11px;
 `;
 
-export const Description = styled.Text.attrs({
-  numberOfLines: 1,
-})`
-  font-size: 14px;
-  color: #333;
-  margin-left: 2px;
+export const DateTime = styled.Text`
+  color: #999;
+  font-size: 13px;
+  margin-left: 5px;
 `;
 
-export const SubmitButton = styled(Button)`
-  margin-top: 10px;
+export const Location = styled.Text`
+  color: #999;
+  font-size: 13px;
+  margin-left: 5px;
+`;
+
+export const Organizer = styled.Text`
+  color: #999;
+  font-size: 13px;
+  margin-left: 5px;
+`;
+
+export const ActionButton = styled(Button)`
+  margin-top: 16px;
 `;

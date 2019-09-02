@@ -1,17 +1,12 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { Container, Text } from './styles';
+import { Container, Text, Loading } from './styles';
 
-export default function Button({ children, loading, ...rest }) {
+export default function Button({ children, loading, outline, ...rest }) {
   return (
-    <Container {...rest}>
-      {loading ? (
-        <ActivityIndicator size="small" color="#fff" />
-      ) : (
-        <Text>{children}</Text>
-      )}
+    <Container outline={outline} {...rest}>
+      {loading ? <Loading /> : <Text outline={outline}>{children}</Text>}
     </Container>
   );
 }
@@ -19,8 +14,10 @@ export default function Button({ children, loading, ...rest }) {
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
+  outline: PropTypes.bool,
 };
 
 Button.defaultProps = {
   loading: false,
+  outline: false,
 };

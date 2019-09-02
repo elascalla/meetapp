@@ -1,47 +1,62 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import { useSelector } from 'react-redux';
 
 import {
   Container,
-  Image,
+  Banner,
   Content,
   Title,
   Info,
-  Description,
-  SubmitButton,
+  Row,
+  DateTime,
+  Location,
+  Organizer,
+  ActionButton,
 } from './styles';
 
-export default function MeetupCard({ data, textButton, onHandle }) {
+export default function MeetupCard({ data, visible, action, onPress }) {
+  const dateFormatted = useMemo(() => {
+    return format(parseISO(data.date), "d 'de' MMMM', às' H'h'", {
+      locale: pt,
+    });
+  }, [data.date]);
+
+  const loading = useSelector(state => state.meetup.loading);
+
   return (
-    <Container past={data.past}>
-      <Image
-        source={{
-          uri: data.banner
-            ? data.banner.url
-            : 'https://coverpixs.com/images/items/itm_2013-01-27_11-43-42_2.jpg',
-        }}
-        resizeMode="banner"
+    <Container>
+      <Banner
+        source={{ uri: data.banner.url }}
+        // TODO: Backend should generate a smaller image for faster loading
+        smallSource={{ uri: data.banner.url }}
+        shouldLoad={visible}
       />
 
       <Content>
+        <Title>{data.title}</Title>
+
         <Info>
-          <Title>{data.title}</Title>
-        </Info>
-        <Info>
-          <Icon name="event" size={14} color="#333" />
-          <Description>{data.date}</Description>
-        </Info>
-        <Info>
-          <Icon name="place" size={14} color="#333" />
-          <Description>{data.location}</Description>
-        </Info>
-        <Info>
-          <Icon name="person" size={14} color="#333" />
-          <Description>Organizador: {data.user.name}</Description>
+          <Row>
+            <Icon name="event" size={14} color="#999" />
+            <DateTime>{dateFormatted}</DateTime>
+          </Row>
+          <Row>
+            <Icon name="place" size={14} color="#999" />
+            <Location>{data.location}</Location>
+          </Row>
+          <Row>
+            <Icon name="person" size={14} color="#999" />
+            <Organizer>Organizador {data.user.name}</Organizer>
+          </Row>
         </Info>
 
-        <SubmitButton onPress={onHandle}>{textButton}</SubmitButton>
+        <ActionButton onPress={onPress}>
+          {loading ? 'Processando...' : action}
+        </ActionButton>
       </Content>
     </Container>
   );
@@ -49,21 +64,23 @@ export default function MeetupCard({ data, textButton, onHandle }) {
 
 MeetupCard.propTypes = {
   data: PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    past: PropTypes.bool.isRequired,
+    id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    location: PropTypes.string,
+    date: PropTypes.string,
     user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string,
     }),
     banner: PropTypes.shape({
-      url: PropTypes.string.isRequired,
+      url: PropTypes.string,
     }),
   }).isRequired,
-  textButton: PropTypes.string.isRequired,
-  onHandle: PropTypes.func,
+  visible: PropTypes.bool,
+  onPress: PropTypes.func.isRequired,
+  action: PropTypes.string.isRequired,
 };
 
 MeetupCard.defaultProps = {
-  onHandle: () => {},
+  visible: true,
 };
