@@ -31,7 +31,6 @@ export default function MeetupCard({ data, visible, action, onPress }) {
     <Container>
       <Banner
         source={{ uri: data.banner.url }}
-        // TODO: Backend should generate a smaller image for faster loading
         smallSource={{ uri: data.banner.url }}
         shouldLoad={visible}
       />
