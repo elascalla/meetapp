@@ -104,12 +104,9 @@ export default function Meetups() {
         <MeetupsList
           data={meetups}
           keyExtractor={item => String(item.id)}
-          onEndReached={this.loadPage}
-          onEndReachedThreshold={0.1}
           onRefresh={refreshList}
           refreshing={refreshing}
           onViewableItemsChanged={handleViewableChanged}
-          viewabilityConfig={{ viewAreaCoveragePercentThreshold: 20 }}
           ListFooterComponent={loading && <Loading />}
           ListEmptyComponent={
             !loading &&

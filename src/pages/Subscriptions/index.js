@@ -76,12 +76,9 @@ function Subscriptions({ isFocused }) {
         <SubscriptionsList
           data={subscriptions}
           keyExtractor={item => String(item.id)}
-          onEndReached={() => loadPage()}
-          onEndReachedThreshold={0.1}
           onRefresh={refreshList}
           refreshing={refreshing}
           onViewableItemsChanged={handleViewableChanged}
-          viewabilityConfig={{ viewAreaCoveragePercentThreshold: 20 }}
           ListFooterComponent={loading && <Loading />}
           ListEmptyComponent={
             !loading &&

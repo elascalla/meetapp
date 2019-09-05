@@ -30,7 +30,7 @@ export default function MeetupCard({ data, visible, action, onPress }) {
   return (
     <Container>
       <Banner
-        source={{ uri: data.banner.url }}
+        source={{ uri: data.banner && data.banner.url }}
         smallSource={{ uri: data.banner.url }}
         shouldLoad={visible}
       />
